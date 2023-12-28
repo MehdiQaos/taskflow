@@ -1,9 +1,11 @@
 package dev.mehdi.taskflow.domain.model;
 
-import dev.mehdi.taskflow.domain.model.enums.DemandStatus;
-import dev.mehdi.taskflow.domain.model.enums.DemandType;
+import dev.mehdi.taskflow.domain.model.enums.RequestStatus;
+import dev.mehdi.taskflow.domain.model.enums.RequestType;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Builder
@@ -11,13 +13,17 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Demand {
+public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String reason;
+
+    private LocalDateTime createdAt;
+
     @ManyToOne
-    private User user;
+    private ProjectMembership projectMembership;
 
     @ManyToOne
     private Task task;
@@ -26,7 +32,8 @@ public class Demand {
     private Task replacementTask;
 
     @Enumerated(EnumType.STRING)
-    private DemandType type;
+    private RequestType type;
 
-    private DemandStatus status;
+    @Enumerated(EnumType.STRING)
+    private RequestStatus status;
 }

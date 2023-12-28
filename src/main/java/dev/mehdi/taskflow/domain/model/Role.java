@@ -4,6 +4,7 @@ import dev.mehdi.taskflow.domain.model.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,8 +21,8 @@ public class Role {
     private UserRole name;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    private List<User> users;
+    private final List<User> users = new ArrayList<>();
 
     @ManyToMany
-    private List<Permission> permissions;
+    private final List<Permission> permissions = new ArrayList<>();
 }

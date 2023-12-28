@@ -21,6 +21,6 @@ public class Tag {
     private String name;
     private String description;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
-    private List<Task> tasks = new ArrayList<>();
+    @ManyToMany(mappedBy = "tags")
+    private final List<Task> tasks = new ArrayList<>();
 }

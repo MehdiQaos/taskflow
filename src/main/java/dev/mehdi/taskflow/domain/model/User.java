@@ -25,14 +25,14 @@ public class User {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "assignedTo", fetch = FetchType.LAZY)
-    private List<Task> assignedTasks = new ArrayList<>();
-
-    @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY)
-    private List<Task> createdTasks = new ArrayList<>();
+    @OneToMany(mappedBy = "owner")
+    private final List<Project> ownProjects = new ArrayList<>();
 
     @ManyToMany
-    private List<Role> roles = new ArrayList<>();
+    private final List<Role> roles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private final List<ProjectMembership> projectMemberships = new ArrayList<>();
 
     @PrePersist
     public void prePersist() {
@@ -42,5 +42,9 @@ public class User {
     @PreUpdate
     public void preUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+
+    public void addRole(Role role) {
+        roles.add(role);
     }
 }

@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -30,10 +31,13 @@ public class Task {
     private LocalDateTime endDate;
 
     @ManyToOne
-    private User createdBy;
+    private Project project;
 
     @ManyToOne
-    private User assignedTo;
+    private ProjectMembership assignedTo;
+
+    @ManyToOne
+    private ProjectMembership createdBy;
 
     @ManyToMany
     private final List<Tag> tags = new ArrayList<>();

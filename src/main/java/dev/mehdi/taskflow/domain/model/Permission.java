@@ -3,6 +3,7 @@ package dev.mehdi.taskflow.domain.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,5 +20,5 @@ public class Permission {
     private String description;
 
     @ManyToMany(mappedBy = "permissions")
-    private List<Role> roles;
+    private final List<Role> roles = new ArrayList<>();
 }
