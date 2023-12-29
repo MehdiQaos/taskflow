@@ -1,7 +1,11 @@
 package dev.mehdi.taskflow.service.impl;
 
+import dev.mehdi.taskflow.domain.model.Role;
 import dev.mehdi.taskflow.domain.model.User;
+import dev.mehdi.taskflow.dto.user.UserRequestDto;
+import dev.mehdi.taskflow.exception.ResourceNotFoundException;
 import dev.mehdi.taskflow.repository.UserRepository;
+import dev.mehdi.taskflow.service.RoleService;
 import dev.mehdi.taskflow.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final RoleService roleService;
 
     @Override
     public List<User> getAll() {
@@ -25,7 +30,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(User user) {
+    public Optional<User> getByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User create(UserRequestDto userDto) {
+        User user = User.builder()
+                .firstName(userDto.getFirstName())
+                .lastName(userDto.getLastName())
+                .email(userDto.getEmail())
+                .password(userDto.getPassword())
+                .build();
+        userDto.getRolesIds().forEach(roleId -> {
+            Role role = roleService.getById(roleId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
+            user.addRole(role);
+        });
+        return create(user);
+    }
+
+    @Override
+    public User create(User user) {
         return userRepository.save(user);
     }
 

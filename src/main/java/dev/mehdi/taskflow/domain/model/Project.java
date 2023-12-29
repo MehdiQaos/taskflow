@@ -32,4 +32,9 @@ public class Project {
 
     @OneToMany(mappedBy = "project")
     private final List<Task> tasks = new ArrayList<>();
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+    }
 }
