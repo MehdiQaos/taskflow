@@ -29,7 +29,7 @@ public class TaskRequestDto {
     private Long projectId;
 
     @NotNull(message = "Creator is required")
-    private Long creatorMembershipId;
+    private Long creatorId;
 
     @NotEmpty(message = "at least one tag is required")
     private List<Long> tagsIds = new ArrayList<>();

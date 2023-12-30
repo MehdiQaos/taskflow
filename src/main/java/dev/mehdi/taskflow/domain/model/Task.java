@@ -39,6 +39,10 @@ public class Task {
     @ManyToOne
     private ProjectMembership createdBy;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private final List<Tag> tags = new ArrayList<>();
+
+    public void addTag(Tag tag) {
+        tags.add(tag);
+    }
 }

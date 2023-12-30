@@ -7,8 +7,10 @@ import dev.mehdi.taskflow.dto.project.ProjectRequestDto;
 import dev.mehdi.taskflow.dto.project.ProjectResponseDto;
 import dev.mehdi.taskflow.dto.task.TaskRequestDto;
 import dev.mehdi.taskflow.dto.task.TaskResponseDto;
+import dev.mehdi.taskflow.mapper.task.TaskResponseMapper;
 import dev.mehdi.taskflow.service.ProjectService;
 import dev.mehdi.taskflow.service.TaskService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,7 @@ public class ProjectController {
 
     private final ProjectService projectService;
     private final TaskService taskService;
+    private final TaskResponseMapper taskResponseMapper;
 
     @GetMapping
     public ResponseEntity<List<ProjectResponseDto>> getAll() {
@@ -46,9 +49,9 @@ public class ProjectController {
     }
 
     @PostMapping("{id}/task")
-    public ResponseEntity<TaskResponseDto> addTask(@PathVariable Long id, @RequestBody TaskRequestDto taskRequestDto) {
+    public ResponseEntity<TaskResponseDto> addTask(@PathVariable Long id, @Valid @RequestBody TaskRequestDto taskRequestDto) {
         Task task = taskService.addTask(id, taskRequestDto);
-        return null;
+        return ResponseEntity.ok(taskResponseMapper.toDto(task));
     }
 
     @PostMapping("{projectId}/member/{memberId}")

@@ -8,6 +8,8 @@ import dev.mehdi.taskflow.service.ProjectMembershipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ProjectMembershipServiceImpl implements ProjectMembershipService {
@@ -23,5 +25,10 @@ public class ProjectMembershipServiceImpl implements ProjectMembershipService {
                 .user(user)
                 .build();
         return projectMembershipRepository.save(projectMembership);
+    }
+
+    @Override
+    public Optional<ProjectMembership> findByProjectAndUser(Project project, User user) {
+        return projectMembershipRepository.findByProjectAndUser(project, user);
     }
 }

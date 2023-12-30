@@ -1,5 +1,7 @@
 package dev.mehdi.taskflow.exception;
 
+import lombok.Getter;
+
 import java.util.Map;
 
 public class InvalidRequestException extends RuntimeException {
