@@ -1,8 +1,11 @@
 package dev.mehdi.taskflow.exception.response;
 
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 import java.util.Map;
 
+@Getter
 public class ErrorValidationResponse {
     private final LocalDateTime timestamp = LocalDateTime.now();
     private final String message = "Validation Failed";

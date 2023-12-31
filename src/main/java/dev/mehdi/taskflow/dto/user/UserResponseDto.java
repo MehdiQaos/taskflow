@@ -18,7 +18,7 @@ public class UserResponseDto {
     private String email;
     private List<RoleResponseDto> roles;
 
-    public static UserResponseDto from(User user) {
+    public static UserResponseDto fromUser(User user) {
         return UserResponseDto.builder()
                 .id(user.getId())
                 .firstName(user.getFirstName())

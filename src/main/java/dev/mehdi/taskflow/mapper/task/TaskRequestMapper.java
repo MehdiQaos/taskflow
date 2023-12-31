@@ -62,7 +62,7 @@ public class TaskRequestMapper {
         taskRequestDto.getTagsIds().forEach(tagId -> {
             tagService.findById(tagId).ifPresentOrElse(
                 task::addTag,
-                () -> tagsErrors.append("tag not found id: ").append(tagId)
+                () -> tagsErrors.append("tag not found id: ").append(tagId).append(";")
             );
         });
         if (!tagsErrors.isEmpty()) {
