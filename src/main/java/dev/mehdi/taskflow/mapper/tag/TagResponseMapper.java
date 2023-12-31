@@ -5,7 +5,7 @@ import dev.mehdi.taskflow.dto.tag.TagResponseDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TagResponseDtoMapper {
+public class TagResponseMapper {
     public TagResponseDto toDto(Tag tag) {
         return new TagResponseDto(
                 tag.getId(),

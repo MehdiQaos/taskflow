@@ -3,7 +3,7 @@ package dev.mehdi.taskflow.mapper.task;
 import dev.mehdi.taskflow.domain.model.Task;
 import dev.mehdi.taskflow.dto.task.TaskResponseDto;
 import dev.mehdi.taskflow.mapper.projectMembership.ProjectMembershipDtoMapper;
-import dev.mehdi.taskflow.mapper.tag.TagResponseDtoMapper;
+import dev.mehdi.taskflow.mapper.tag.TagResponseMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TaskResponseMapper {
     private final ProjectMembershipDtoMapper projectMembershipDtoMapper;
-    private final TagResponseDtoMapper tagResponseDtoMapper;
+    private final TagResponseMapper tagResponseMapper;
     public TaskResponseDto toDto(Task task) {
         System.out.println(task.getTags());
         return TaskResponseDto.builder()
@@ -25,7 +25,7 @@ public class TaskResponseMapper {
             .assignedTo(task.getAssignedTo() != null ? projectMembershipDtoMapper
                     .toDto(task.getAssignedTo()) : null)
             .createdBy(projectMembershipDtoMapper.toDto(task.getCreatedBy()))
-            .tags(task.getTags().stream().map(tagResponseDtoMapper::toDto).toList())
+            .tags(task.getTags().stream().map(tagResponseMapper::toDto).toList())
             .build();
     }
 }
