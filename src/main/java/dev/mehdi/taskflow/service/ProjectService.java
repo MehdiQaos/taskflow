@@ -18,4 +18,6 @@ public interface ProjectService {
     Project addTask(Long id, TaskRequestDto taskRequestDto);
 
     ProjectMembership addMember(Long projectId, Long userId);
+
+    Optional<Project> createIfNotExist(ProjectRequestDto projectRequestDto);
 }

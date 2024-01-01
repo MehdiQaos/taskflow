@@ -31,4 +31,9 @@ public class ProjectMembershipServiceImpl implements ProjectMembershipService {
     public Optional<ProjectMembership> findByProjectAndUser(Project project, User user) {
         return projectMembershipRepository.findByProjectAndUser(project, user);
     }
+
+    @Override
+    public Optional<ProjectMembership> getById(Long memberShipId) {
+        return projectMembershipRepository.findById(memberShipId);
+    }
 }

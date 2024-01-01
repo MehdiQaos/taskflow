@@ -46,7 +46,6 @@ public class ProjectServiceImpl implements ProjectService {
         } catch (IllegalArgumentException e) {
             throw new ResourceNotFoundException("Invalid project status");
         }
-//        newProject.setCreatedAt(LocalDateTime.now());
         newProject.setStatus(status);
         return projectRepository.save(newProject);
     }
@@ -63,5 +62,16 @@ public class ProjectServiceImpl implements ProjectService {
         User user = userService.getById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
         return projectMembershipService.create(project, user);
+    }
+
+    @Override
+    public Optional<Project> createIfNotExist(ProjectRequestDto projectRequestDto) {
+        User owner = userService.getById(projectRequestDto.getOwnerId()).orElse(null);
+        if (owner == null)
+            return Optional.empty();
+
+        if (projectRepository.findByNameAndOwner(projectRequestDto.getName(), owner).isPresent())
+            return Optional.empty();
+        return Optional.of(create(projectRequestDto));
     }
 }

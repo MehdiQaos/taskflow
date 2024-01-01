@@ -5,6 +5,7 @@ import dev.mehdi.taskflow.domain.model.ProjectMembership;
 import dev.mehdi.taskflow.domain.model.Task;
 import dev.mehdi.taskflow.dto.project.ProjectRequestDto;
 import dev.mehdi.taskflow.dto.project.ProjectResponseDto;
+import dev.mehdi.taskflow.dto.task.TaskAssignDto;
 import dev.mehdi.taskflow.dto.task.TaskRequestDto;
 import dev.mehdi.taskflow.dto.task.TaskResponseDto;
 import dev.mehdi.taskflow.mapper.task.TaskResponseMapper;
@@ -58,5 +59,13 @@ public class ProjectController {
     public ResponseEntity<Boolean> addMember(@PathVariable Long projectId, @PathVariable Long memberId) {
         ProjectMembership projectMembership = projectService.addMember(projectId, memberId);
         return ResponseEntity.ok(projectMembership != null);
+    }
+
+    @GetMapping("{id}/tasks")
+    public ResponseEntity<List<TaskResponseDto>> getAllTasks(@PathVariable Long id) {
+        List<TaskResponseDto> tasksDto = taskService.getAllByProjectId(id).stream()
+                .map(taskResponseMapper::toDto)
+                .toList();
+        return ResponseEntity.ok(tasksDto);
     }
 }
