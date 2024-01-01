@@ -31,7 +31,7 @@ public class DemandeServiceImpl implements DemandeService {
                 .findAllByTypeAndCreatedAtIsAfter(DemandeType.TASK_REPLACEMENT, LocalDateTime.now().minusHours(24));
         for (Demande d : sameDayDemands) {
             if (d.getCreatedAt().plusHours(12).isBefore(LocalDateTime.now())) {
-                allowedDemands = 3;
+                allowedDemands++;
                 d.setStatus(DemandeStatus.UNPROCESSED);
             }
         }
