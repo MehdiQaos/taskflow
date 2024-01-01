@@ -1,5 +1,5 @@
 package dev.mehdi.taskflow.domain.model.enums;
 
-public enum RequestType {
+public enum DemandeType {
     TASK_REPLACEMENT, TASK_REMOVAL
 }

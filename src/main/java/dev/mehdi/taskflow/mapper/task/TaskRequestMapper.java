@@ -58,7 +58,6 @@ public class TaskRequestMapper {
         );
 
         StringBuffer tagsErrors = new StringBuffer();
-        System.out.println("tags request: " + taskRequestDto.getTagsIds());
         taskRequestDto.getTagsIds().forEach(tagId -> {
             tagService.findById(tagId).ifPresentOrElse(
                 task::addTag,

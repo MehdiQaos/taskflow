@@ -5,7 +5,7 @@ import dev.mehdi.taskflow.dto.projectMembership.ProjectMembershipDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProjectMembershipDtoMapper {
+public class ProjectMembershipMapper {
     public ProjectMembershipDto toDto(ProjectMembership projectMembership) {
         return new ProjectMembershipDto(
                 projectMembership.getId(),

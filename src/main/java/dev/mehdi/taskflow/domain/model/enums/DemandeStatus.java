@@ -1,5 +1,5 @@
 package dev.mehdi.taskflow.domain.model.enums;
 
-public enum RequestStatus {
+public enum DemandeStatus {
     PENDING, ACCEPTED, REJECTED, UNPROCESSED, NULL
 }

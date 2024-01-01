@@ -1,7 +1,7 @@
 package dev.mehdi.taskflow.domain.model;
 
-import dev.mehdi.taskflow.domain.model.enums.RequestStatus;
-import dev.mehdi.taskflow.domain.model.enums.RequestType;
+import dev.mehdi.taskflow.domain.model.enums.DemandeStatus;
+import dev.mehdi.taskflow.domain.model.enums.DemandeType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,9 +11,8 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-public class Request {
+@Getter @Setter
+public class Demande {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,8 +31,14 @@ public class Request {
     private Task replacementTask;
 
     @Enumerated(EnumType.STRING)
-    private RequestType type;
+    private DemandeType type;
 
     @Enumerated(EnumType.STRING)
-    private RequestStatus status;
+    private DemandeStatus status;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+    }
+
 }

@@ -32,7 +32,7 @@ public class ProjectMembership {
     private final List<Task> tasks = new ArrayList<>();
 
     @OneToMany(mappedBy = "projectMembership")
-    private final List<Request> requests = new ArrayList<>();
+    private final List<Demande> demandes = new ArrayList<>();
 
     @OneToMany(mappedBy = "createdBy")
     private final List<Task> createdTasks = new ArrayList<>();

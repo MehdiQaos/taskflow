@@ -1,6 +1,5 @@
 package dev.mehdi.taskflow.service.impl;
 
-import dev.mehdi.taskflow.domain.model.Project;
 import dev.mehdi.taskflow.domain.model.ProjectMembership;
 import dev.mehdi.taskflow.domain.model.Task;
 import dev.mehdi.taskflow.dto.task.TaskRequestDto;
@@ -27,8 +26,6 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task addTask(Long id, TaskRequestDto taskRequestDto) {
         Task task = taskRequestMapper.toTask(taskRequestDto);
-        System.out.println("tags: ");
-        task.getTags().forEach(tag -> System.out.println("tag: " + tag.getName()));
 
         LocalDateTime startDate = task.getStartDate();
         LocalDateTime endDate = task.getEndDate();
@@ -52,6 +49,11 @@ public class TaskServiceImpl implements TaskService {
         ProjectMembership projectMembership = projectMembershipService.getById(memberShipId)
                 .orElseThrow(() -> new RuntimeException("user is not member of this project"));
         task.setAssignedTo(projectMembership);
+        return taskRepository.save(task);
+    }
+
+    @Override
+    public Task save(Task task) {
         return taskRepository.save(task);
     }
 
