@@ -1,6 +1,8 @@
 package dev.mehdi.taskflow.service.impl;
 
+import dev.mehdi.taskflow.domain.model.Token;
 import dev.mehdi.taskflow.service.JwtService;
+import dev.mehdi.taskflow.service.TokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,6 +19,14 @@ import java.util.function.Function;
 @Service
 public class JwtServiceImpl implements JwtService {
     private final String KEY = "0ddf5597e02d981f8803c4cc11f015a4e52679d706edb29b595d9e466def5bcf95273a3053ab5d97ee893c23e4023b912daefaade316406a33b7685d4d223dfa";
+    private final long TOKEN_VALIDITY_TIME = 1000 * 3600 * 24;
+    private final TokenService tokenService;
+
+    public JwtServiceImpl(
+            TokenService tokenService
+    ) {
+        this.tokenService = tokenService;
+    }
 
     @Override
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
@@ -24,7 +34,7 @@ public class JwtServiceImpl implements JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 3600 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + TOKEN_VALIDITY_TIME))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -35,9 +45,13 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public boolean isTokenValid(String token, UserDetails userDetails) {
-        String username = extractUsername(token);
-        return userDetails.getUsername().equals(username) && !isTokenExpired(token);
+    public boolean isTokenValid(String jwtToken, UserDetails userDetails) {
+        boolean isTokenValid = tokenService.getByToken(jwtToken)
+                .map(Token::getIsValid)
+                .orElse(false);
+        String username = extractUsername(jwtToken);
+        return userDetails.getUsername().equals(username) &&
+                                !isTokenExpired(jwtToken) && isTokenValid;
     }
 
     @Override

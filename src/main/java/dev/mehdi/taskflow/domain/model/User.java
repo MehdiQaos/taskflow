@@ -38,6 +38,10 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private final List<ProjectMembership> projectMemberships = new ArrayList<>();
 
+    //    TODO: change to lazy
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private final List<Token> tokens = new ArrayList<>();
+
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();

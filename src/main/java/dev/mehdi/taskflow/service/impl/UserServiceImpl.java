@@ -3,6 +3,7 @@ package dev.mehdi.taskflow.service.impl;
 import dev.mehdi.taskflow.domain.model.Role;
 import dev.mehdi.taskflow.domain.model.User;
 import dev.mehdi.taskflow.dto.user.UserRequestDto;
+import dev.mehdi.taskflow.exception.ResourceExistException;
 import dev.mehdi.taskflow.exception.ResourceNotFoundException;
 import dev.mehdi.taskflow.repository.UserRepository;
 import dev.mehdi.taskflow.service.RoleService;
@@ -52,6 +53,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
+        getByEmail(user.getEmail()).ifPresent(u -> {
+            throw new ResourceExistException("User with email already exists");
+        });
         return userRepository.save(user);
     }
 
