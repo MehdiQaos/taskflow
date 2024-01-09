@@ -5,6 +5,7 @@ import dev.mehdi.taskflow.exception.ResourceExistException;
 import dev.mehdi.taskflow.exception.ResourceNotFoundException;
 import dev.mehdi.taskflow.exception.response.ErrorResponse;
 import dev.mehdi.taskflow.exception.response.ErrorValidationResponse;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -106,4 +107,14 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
+
+//    @ExceptionHandler(ExpiredJwtException.class)
+//    public final ResponseEntity<ErrorResponse> handleExpiredJwtException(
+//            ExpiredJwtException ex, WebRequest request) {
+//
+//        ErrorResponse errorResponse = new ErrorResponse(
+//                ex.getMessage(), request.getDescription(false));
+//
+//        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+//    }
 }

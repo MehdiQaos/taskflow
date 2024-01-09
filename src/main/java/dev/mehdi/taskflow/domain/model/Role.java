@@ -23,6 +23,10 @@ public class Role {
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private final List<User> users = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private final List<Permission> permissions = new ArrayList<>();
+
+    public void addPermission(Permission permission) {
+        permissions.add(permission);
+    }
 }

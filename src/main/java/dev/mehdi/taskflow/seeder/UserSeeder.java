@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-@Order(3)
+@Order(4)
 @RequiredArgsConstructor
 public class UserSeeder implements CommandLineRunner {
     private final UserService userService;

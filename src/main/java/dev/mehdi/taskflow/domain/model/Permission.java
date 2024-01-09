@@ -19,6 +19,10 @@ public class Permission {
     private String name;
     private String description;
 
-    @ManyToMany(mappedBy = "permissions")
+    @ManyToMany(mappedBy = "permissions", fetch = FetchType.EAGER)
     private final List<Role> roles = new ArrayList<>();
+
+    public void addRole(Role role) {
+        roles.add(role);
+    }
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-@Order(2)
+@Order(1)
 @RequiredArgsConstructor
 public class TagSeeder implements CommandLineRunner {
 
